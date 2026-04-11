@@ -1,16 +1,14 @@
-'use client'
+﻿'use client'
 
-import { Checkbox } from '@/components/ui/checkbox'
+import { Controller } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
 import { Eye, EyeOff } from 'lucide-react'
-import * as React from 'react'
 import { useState } from 'react'
-import { Controller, FieldPath, FieldValues, FormProvider, UseFormReturn } from 'react-hook-form'
+import { cn } from '@/lib/utils'
 
-interface FormFieldProps<TFieldValues extends FieldValues = any> {
-  form: UseFormReturn<any>
+interface FormFieldProps {
+  form: any
   name: string
   label?: string
   placeholder?: string
@@ -213,7 +211,7 @@ export function FormCheckboxField({
             onChange={(e) => field.onChange(e.target.checked)}
             className="h-4 w-4 rounded border-neutral-300 text-blue-600 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-blue-400 dark:focus:ring-blue-400"
           />
-          <Label htmlFor={String(name)} className="text-sm cursor-pointer">
+          <Label htmlFor={name} className="text-sm cursor-pointer">
             {label}
           </Label>
         </div>
@@ -221,148 +219,3 @@ export function FormCheckboxField({
     />
   )
 }
-
-export interface FormInputFieldProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-  form: UseFormReturn<any>
-  name: TName
-  label?: string
-  placeholder?: string
-  description?: string
-  type?: string
-  disabled?: boolean
-  className?: string
-}
-
-export const FormInputField = React.forwardRef<
-  HTMLInputElement,
-  FormInputFieldProps
->(
-  (
-    {
-      form,
-      name,
-      label,
-      placeholder,
-      description,
-      type = 'text',
-      disabled,
-      className,
-    },
-    ref,
-  ) => {
-    const fieldError = form.formState.errors[name]
-
-    return (
-      <div className={cn('space-y-2', className)}>
-        {label && (
-          <Label htmlFor={String(name)} className="text-sm font-medium">
-            {label}
-          </Label>
-        )}
-        <Controller
-          control={form.control}
-          name={name}
-          render={({ field }) => (
-            <Input
-              id={String(name)}
-              type={type}
-              placeholder={placeholder}
-              disabled={disabled}
-              {...field}
-              className={cn(
-                'h-10 w-full',
-                fieldError &&
-                  'border-destructive focus-visible:ring-destructive/50',
-              )}
-            />
-          )}
-        />
-        {fieldError && (
-          <p className="text-xs font-medium text-destructive">
-            {String(fieldError.message)}
-          </p>
-        )}
-        {description && !fieldError && (
-          <p className="text-xs text-muted-foreground">{description}</p>
-        )}
-      </div>
-    )
-  },
-)
-
-FormInputField.displayName = 'FormInputField'
-
-export interface FormCheckboxFieldProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-  form: UseFormReturn<any>
-  name: TName
-  label?: string
-  description?: string
-  disabled?: boolean
-  className?: string
-}
-
-export const FormCheckboxField = React.forwardRef<
-  HTMLInputElement,
-  FormCheckboxFieldProps
->(({ form, name, label, description, disabled, className }, ref) => {
-  const fieldError = form.formState.errors[name]
-
-  return (
-    <div className={cn('flex items-start space-x-3', className)}>
-      <Controller
-        control={form.control}
-        name={name}
-        render={({ field }) => (
-          <Checkbox
-            id={String(name)}
-            checked={field.value}
-            onChange={(e) => field.onChange(e.target.checked)}
-            disabled={disabled}
-            className="mt-1"
-          />
-        )}
-      />
-      <div className="space-y-1">
-        {label && (
-          <Label
-            htmlFor={String(name)}
-            className="text-sm font-medium cursor-pointer"
-          >
-            {label}
-          </Label>
-        )}
-        {fieldError && (
-          <p className="text-xs font-medium text-destructive">
-            {String(fieldError.message)}
-          </p>
-        )}
-        {description && !fieldError && (
-          <p className="text-xs text-muted-foreground">{description}</p>
-        )}
-      </div>
-    </div>
-  )
-})
-
-FormCheckboxField.displayName = 'FormCheckboxField'
-
-export interface FormWrapperProps {
-  children: React.ReactNode
-  form: UseFormReturn<any>
-}
-
-export const FormWrapper: React.FC<FormWrapperProps> = ({ children, form }) => {
-  return (
-    <FormProvider {...form}>
-      <div className="space-y-4">{children}</div>
-    </FormProvider>
-  )
-}
-
-FormWrapper.displayName = 'FormWrapper'
