@@ -30,7 +30,7 @@ export function UserSkeleton() {
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: 5 }).map((_, i) => (
+            {Array.from({ length: 10 }).map((_, i) => (
               <tr key={i} className="border-b border-gray-100">
                 <td className="px-4 py-3">
                   <div className="h-4 w-4 bg-gray-200 rounded animate-pulse" />

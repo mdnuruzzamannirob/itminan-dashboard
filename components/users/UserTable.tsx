@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Eye, ToggleLeft, ToggleRight } from 'lucide-react'
+import { Ban, CircleCheckBig, Eye } from 'lucide-react'
 import { useState } from 'react'
 import { UserDetailsModal } from './UserDetailsModal'
 
@@ -49,7 +49,7 @@ export function UserTable({ users, onStatusChange }: UserTableProps) {
 
   return (
     <>
-      <div className="rounded-lg border bg-white overflow-hidden shadow-sm">
+      <div className="rounded-lg border bg-white overflow-hidden ">
         {/* Desktop Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -114,7 +114,7 @@ export function UserTable({ users, onStatusChange }: UserTableProps) {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleViewUser(user)}
-                        className="p-2 hover:bg-blue-50 rounded-md transition text-blue-600 hover:text-blue-700"
+                        className="p-2 hover:bg-blue-100 rounded-md transition text-blue-600 hover:text-blue-700"
                         title="View details"
                       >
                         <Eye className="size-4" />
@@ -131,8 +131,8 @@ export function UserTable({ users, onStatusChange }: UserTableProps) {
                         className={cn(
                           'p-2 rounded-md transition',
                           user.accountStatus === 'active'
-                            ? 'hover:bg-red-50 text-red-600 hover:text-red-700'
-                            : 'hover:bg-green-50 text-gray-400 hover:text-green-700',
+                            ? 'hover:bg-red-100 text-red-600 hover:text-red-700'
+                            : 'hover:bg-green-100 text-green-600 hover:text-green-700',
                         )}
                         title={
                           user.accountStatus === 'active'
@@ -141,9 +141,9 @@ export function UserTable({ users, onStatusChange }: UserTableProps) {
                         }
                       >
                         {user.accountStatus === 'active' ? (
-                          <ToggleRight className="size-4" />
+                          <Ban className="size-4" />
                         ) : (
-                          <ToggleLeft className="size-4" />
+                          <CircleCheckBig className="size-4" />
                         )}
                       </button>
                     </div>

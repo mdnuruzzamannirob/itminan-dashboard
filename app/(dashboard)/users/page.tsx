@@ -1,8 +1,8 @@
 'use client'
 
+import { Input } from '@/components/ui/input'
 import { ModernPagination } from '@/components/users/Pagination'
 import { UserSkeleton } from '@/components/users/UserSkeleton'
-import { Input } from '@/components/ui/input'
 import { User, UserTable } from '@/components/users/UserTable'
 import { cn } from '@/lib/utils'
 import { Search } from 'lucide-react'
@@ -247,7 +247,7 @@ export default function UsersPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState<FilterType>('all')
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 5
+  const pageSize = 10
 
   // Simulate loading
   useEffect(() => {
@@ -324,9 +324,9 @@ export default function UsersPage() {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Search Input */}
-        <div className="relative w-full sm:w-auto flex-1">
+        <div className="relative flex-1  ">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
           <Input
             type="text"
@@ -345,7 +345,7 @@ export default function UsersPage() {
           <button
             onClick={() => handleFilterChange('all')}
             className={cn(
-              'px-4 py-2 rounded-lg font-medium text-sm transition-colors',
+              'px-4 py-2 rounded-md font-medium text-sm transition-colors',
               filterType === 'all'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
@@ -356,7 +356,7 @@ export default function UsersPage() {
           <button
             onClick={() => handleFilterChange('active')}
             className={cn(
-              'px-4 py-2 rounded-lg font-medium text-sm transition-colors',
+              'px-4 py-2 rounded-md font-medium text-sm transition-colors',
               filterType === 'active'
                 ? 'bg-green-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
@@ -367,7 +367,7 @@ export default function UsersPage() {
           <button
             onClick={() => handleFilterChange('suspended')}
             className={cn(
-              'px-4 py-2 rounded-lg font-medium text-sm transition-colors',
+              'px-4 py-2 rounded-md font-medium text-sm transition-colors',
               filterType === 'suspended'
                 ? 'bg-red-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
