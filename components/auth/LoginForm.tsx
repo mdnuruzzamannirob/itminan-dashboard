@@ -1,5 +1,6 @@
 'use client'
 
+import { Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
@@ -10,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { LoginValues, loginSchema } from '@/lib/schemas/auth'
+import { ErrorInfoMessage } from './ErrorInfoMessage'
 
 export function LoginForm() {
   const router = useRouter()
@@ -51,9 +53,6 @@ export function LoginForm() {
   return (
     <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
       <CardHeader className="space-y-2">
-        <p className="text-xs font-semibold tracking-[0.24em] text-emerald-600">
-          GOSNKR
-        </p>
         <CardTitle className="text-3xl font-semibold text-slate-900">
           Sign in
         </CardTitle>
@@ -71,30 +70,32 @@ export function LoginForm() {
         <form className="space-y-4" onSubmit={onSubmit} noValidate>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="admin@gosnkr.com"
-              {...register('email')}
-            />
-            {errors.email ? (
-              <p className="text-xs text-destructive">{errors.email.message}</p>
-            ) : null}
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="admin@gosnkr.com"
+                className="pl-9"
+                {...register('email')}
+              />
+            </div>
+            <ErrorInfoMessage error={errors.email?.message} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              {...register('password')}
-            />
-            {errors.password ? (
-              <p className="text-xs text-destructive">
-                {errors.password.message}
-              </p>
-            ) : null}
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="pl-9"
+                {...register('password')}
+              />
+            </div>
+            <ErrorInfoMessage error={errors.password?.message} />
           </div>
 
           <div className="flex items-center justify-between text-sm">
@@ -102,12 +103,14 @@ export function LoginForm() {
               className="flex items-center gap-2 text-slate-600"
               htmlFor="remember"
             >
-              <input
-                id="remember"
-                type="checkbox"
-                className="size-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600"
-                {...register('remember')}
-              />
+              <div className="relative flex items-center">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  className="size-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600 accent-emerald-600 cursor-pointer"
+                  {...register('remember')}
+                />
+              </div>
               Remember me
             </label>
             <Link

@@ -1,5 +1,6 @@
 'use client'
 
+import { Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
@@ -10,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ForgotPasswordValues, forgotPasswordSchema } from '@/lib/schemas/auth'
+import { ErrorInfoMessage } from './ErrorInfoMessage'
 
 export function ForgotPasswordForm() {
   const router = useRouter()
@@ -49,9 +51,6 @@ export function ForgotPasswordForm() {
   return (
     <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
       <CardHeader className="space-y-2">
-        <p className="text-xs font-semibold tracking-[0.24em] text-emerald-600">
-          GOSNKR
-        </p>
         <CardTitle className="text-3xl font-semibold text-slate-900">
           Forgot password
         </CardTitle>
@@ -64,18 +63,20 @@ export function ForgotPasswordForm() {
         <form className="space-y-4" onSubmit={onSubmit} noValidate>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="admin@gosnkr.com"
-              {...register('email')}
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="admin@gosnkr.com"
+                className="pl-9"
+                {...register('email')}
+              />
+            </div>
+            <ErrorInfoMessage
+              error={errors.email?.message}
+              info="Use the same email used in your admin login."
             />
-            <p className="text-xs text-slate-500">
-              Use the same email used in your admin login.
-            </p>
-            {errors.email ? (
-              <p className="text-xs text-destructive">{errors.email.message}</p>
-            ) : null}
           </div>
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>

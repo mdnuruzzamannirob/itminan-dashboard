@@ -1,14 +1,16 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { KeyboardEvent, useRef, useState } from 'react'
+import { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { VerifyOtpValues, verifyOtpSchema } from '@/lib/schemas/auth'
+import { ErrorInfoMessage } from './ErrorInfoMessage'
 
 const OTP_LENGTH = 6
+const RESEND_COOLDOWN = 30 // seconds
 
 export function VerifyEmailForm() {
   const router = useRouter()
@@ -16,6 +18,7 @@ export function VerifyEmailForm() {
   const email = searchParams.get('email') ?? ''
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [resendCooldown, setResendCooldown] = useState(0)
   const [digits, setDigits] = useState<string[]>(
     Array.from({ length: OTP_LENGTH }, () => ''),
   )
@@ -30,6 +33,22 @@ export function VerifyEmailForm() {
   } = useForm<VerifyOtpValues>({
     defaultValues: { otp: '' },
   })
+
+  // Auto-focus on first input when component mounts
+  useEffect(() => {
+    refs.current[0]?.focus()
+  }, [])
+
+  // Handle resend cooldown timer
+  useEffect(() => {
+    if (resendCooldown <= 0) return
+
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => prev - 1)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [resendCooldown])
 
   const syncOtpValue = (nextDigits: string[]) => {
     setDigits(nextDigits)
@@ -95,12 +114,16 @@ export function VerifyEmailForm() {
     router.push(`/reset-password?${query.toString()}`)
   })
 
+  const handleResendOtp = async () => {
+    setResendCooldown(RESEND_COOLDOWN)
+    clearErrors('otp')
+    // Here you would make an API call to resend OTP
+    // await resendOtpApi(email)
+  }
+
   return (
     <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
       <CardHeader className="space-y-2">
-        <p className="text-xs font-semibold tracking-[0.24em] text-emerald-600">
-          GOSNKR
-        </p>
         <CardTitle className="text-3xl font-semibold text-slate-900">
           Verify OTP
         </CardTitle>
@@ -137,12 +160,12 @@ export function VerifyEmailForm() {
           </div>
 
           {errors.otp ? (
-            <p className="text-xs text-destructive">{errors.otp.message}</p>
-          ) : null}
-
-          <p className="text-xs text-slate-500">
-            Use exactly 6 digits. You can paste the whole code at once.
-          </p>
+            <ErrorInfoMessage error={errors.otp.message} />
+          ) : (
+            <p className="text-xs text-slate-500">
+              Use exactly 6 digits. You can paste the whole code at once.
+            </p>
+          )}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? 'Verifying...' : 'Verify OTP'}
@@ -152,10 +175,13 @@ export function VerifyEmailForm() {
             <Button
               type="button"
               variant="link"
-              className="px-0 text-emerald-600"
-              onClick={() => refs.current[0]?.focus()}
+              className="px-0 text-emerald-600 disabled:text-slate-400 disabled:cursor-not-allowed"
+              onClick={handleResendOtp}
+              disabled={resendCooldown > 0}
             >
-              Resend OTP
+              {resendCooldown > 0
+                ? `Resend in ${resendCooldown}s`
+                : 'Resend OTP'}
             </Button>
             <Button
               type="button"
