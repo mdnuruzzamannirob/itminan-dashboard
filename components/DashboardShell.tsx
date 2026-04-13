@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import {
   Bug,
   CheckCircle2,
+  ChevronDown,
   Crown,
   LayoutDashboard,
   LogOut,
@@ -46,10 +47,46 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(
+    pathname.startsWith('/settings'),
+  )
+
+  const settingsSubItems = [
+    { href: '/settings', label: 'Edit Profile' },
+    {
+      href: '/settings/change-password',
+      label: 'Change Password',
+    },
+    { href: '/settings/about-us', label: 'About Us' },
+    {
+      href: '/settings/privacy-policy',
+      label: 'Privacy Policy',
+    },
+    {
+      href: '/settings/terms-condition',
+      label: 'Terms & Condition',
+    },
+  ]
 
   const pageTitle = useMemo(() => {
     if (pathname === '/dashboard') {
       return 'Dashboard'
+    }
+
+    // Check settings sub-items
+    const settingsSubItems = [
+      { href: '/settings', label: 'Edit Profile' },
+      { href: '/settings/change-password', label: 'Change Password' },
+      { href: '/settings/about-us', label: 'About Us' },
+      { href: '/settings/privacy-policy', label: 'Privacy Policy' },
+      { href: '/settings/terms-condition', label: 'Terms & Condition' },
+    ]
+
+    const activeSettings = settingsSubItems.find((item) =>
+      pathname.startsWith(item.href),
+    )
+    if (activeSettings) {
+      return activeSettings.label
     }
 
     const activeItem = navItems.find((item) =>
@@ -72,6 +109,53 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             {navItems.map((item) => {
               const active = isActiveRoute(pathname, item.href)
               const Icon = item.icon
+
+              if (item.href === '/settings') {
+                return (
+                  <div key={item.href}>
+                    <button
+                      onClick={() => setSettingsOpen(!settingsOpen)}
+                      className={cn(
+                        'flex w-full items-center justify-between gap-3 px-3 py-2 rounded-md font-medium text-sm transition',
+                        active || settingsOpen
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-gray-700 hover:bg-gray-100',
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className="size-5" />
+                        <span>{item.label}</span>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          'size-4 transition-transform duration-200',
+                          settingsOpen ? 'rotate-180' : '',
+                        )}
+                      />
+                    </button>
+
+                    {settingsOpen && (
+                      <div className="mt-1 ml-4 space-y-1 border-l-2 border-gray-200 pl-3">
+                        {settingsSubItems.map((subItem) => (
+                          <Link
+                            key={subItem.href}
+                            href={subItem.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={cn(
+                              'block px-3 py-2 rounded-md text-sm font-medium transition',
+                              pathname === subItem.href
+                                ? 'bg-blue-50 text-blue-600'
+                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-700',
+                            )}
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
 
               return (
                 <Link
@@ -157,6 +241,53 @@ export function DashboardShell({ children }: { children: ReactNode }) {
               {navItems.map((item) => {
                 const active = isActiveRoute(pathname, item.href)
                 const Icon = item.icon
+
+                if (item.href === '/settings') {
+                  return (
+                    <div key={item.href}>
+                      <button
+                        onClick={() => setSettingsOpen(!settingsOpen)}
+                        className={cn(
+                          'flex w-full items-center justify-between gap-3 px-3 py-2 rounded-md font-medium text-sm transition',
+                          active || settingsOpen
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'text-gray-700 hover:bg-gray-100',
+                        )}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon className="size-5" />
+                          <span>{item.label}</span>
+                        </div>
+                        <ChevronDown
+                          className={cn(
+                            'size-4 transition-transform duration-200',
+                            settingsOpen ? 'rotate-180' : '',
+                          )}
+                        />
+                      </button>
+
+                      {settingsOpen && (
+                        <div className="mt-1 ml-4 space-y-1 border-l-2 border-gray-200 pl-3">
+                          {settingsSubItems.map((subItem) => (
+                            <Link
+                              key={subItem.href}
+                              href={subItem.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className={cn(
+                                'block px-3 py-2 rounded-md text-sm font-medium transition',
+                                pathname === subItem.href
+                                  ? 'bg-blue-50 text-blue-600'
+                                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-700',
+                              )}
+                            >
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
 
                 return (
                   <Link

@@ -1,19 +1,19 @@
 'use client'
 
-import { EditProfileForm } from '@/components/settings/EditProfileForm'
+import { ChangePasswordForm } from '@/components/settings/ChangePasswordForm'
 import { SettingsProfileHeader } from '@/components/settings/SettingsProfileHeader'
 import { SettingsTabs } from '@/components/settings/SettingsTabs'
 
-const SettingsPage = () => {
+const ChangePasswordPage = () => {
   return (
     <div className="space-y-6">
       <SettingsProfileHeader />
       <div className="bg-white rounded-lg p-6">
         <SettingsTabs />
-        <EditProfileForm />
+        <ChangePasswordForm />
       </div>
     </div>
   )
 }
 
-export default SettingsPage
+export default ChangePasswordPage
