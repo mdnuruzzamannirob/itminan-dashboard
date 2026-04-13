@@ -3,16 +3,16 @@
 import { Logo } from '@/components/Logo'
 import { cn } from '@/lib/utils'
 import {
+  Bug,
+  CheckCircle2,
+  Crown,
   LayoutDashboard,
   LogOut,
   Menu,
   Settings2,
+  TrendingUp,
   UsersRound,
   X,
-  TrendingUp,
-  CheckCircle2,
-  Crown,
-  Bug,
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -26,12 +26,12 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-  { href: '/dashboard/users', label: 'User Management', icon: UsersRound },
-  { href: '/dashboard/habits', label: 'Add Habits', icon: CheckCircle2 },
-  { href: '/dashboard/premium', label: 'Premium Users', icon: Crown },
-  { href: '/dashboard/analytics', label: 'Analytics', icon: TrendingUp },
-  { href: '/dashboard/bugs', label: 'Bugs', icon: Bug },
-  { href: '/dashboard/settings', label: 'Settings', icon: Settings2 },
+  { href: '/users', label: 'User Management', icon: UsersRound },
+  { href: '/habits', label: 'Add Habits', icon: CheckCircle2 },
+  { href: '/premium', label: 'Premium Users', icon: Crown },
+  { href: '/analytics', label: 'Analytics', icon: TrendingUp },
+  { href: '/bugs', label: 'Bugs', icon: Bug },
+  { href: '/settings', label: 'Settings', icon: Settings2 },
 ]
 
 function isActiveRoute(pathname: string, href: string) {
