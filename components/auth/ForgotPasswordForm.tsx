@@ -49,12 +49,12 @@ export function ForgotPasswordForm() {
   })
 
   return (
-    <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
+    <Card className="w-full border">
       <CardHeader className="space-y-2">
-        <CardTitle className="text-3xl font-semibold text-slate-900">
+        <CardTitle className="text-3xl font-semibold">
           Forgot password
         </CardTitle>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Enter your account email and we will send a one-time OTP for password
           reset.
         </p>
@@ -64,7 +64,7 @@ export function ForgotPasswordForm() {
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="email"
                 type="email"
@@ -83,11 +83,11 @@ export function ForgotPasswordForm() {
             {isSubmitting ? 'Sending...' : 'Send OTP'}
           </Button>
 
-          <p className="text-center text-sm text-slate-600">
+          <p className="text-center text-sm text-muted-foreground">
             Remembered your password?{' '}
             <Link
               href="/login"
-              className="font-medium text-emerald-600 hover:text-emerald-700"
+              className="font-medium text-primary hover:text-primary/90"
             >
               Back to login
             </Link>

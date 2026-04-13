@@ -51,18 +51,16 @@ export function LoginForm() {
   })
 
   return (
-    <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
+    <Card className="w-full border">
       <CardHeader className="space-y-2">
-        <CardTitle className="text-3xl font-semibold text-slate-900">
-          Sign in
-        </CardTitle>
-        <p className="text-sm text-slate-600">
+        <CardTitle className="text-3xl font-semibold">Sign in</CardTitle>
+        <p className="text-sm text-muted-foreground">
           Use your admin credential to access reporting and management tools.
         </p>
       </CardHeader>
       <CardContent>
         {searchParams.get('reset') === '1' ? (
-          <p className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+          <p className="mb-4 rounded-md border border-primary/20 bg-primary/5 px-3 py-2 text-sm text-primary">
             Password reset successful. Sign in with your new password.
           </p>
         ) : null}
@@ -71,7 +69,7 @@ export function LoginForm() {
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="email"
                 type="email"
@@ -86,7 +84,7 @@ export function LoginForm() {
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="password"
                 type="password"
@@ -100,14 +98,14 @@ export function LoginForm() {
 
           <div className="flex items-center justify-between text-sm">
             <label
-              className="flex items-center gap-2 text-slate-600"
+              className="flex items-center cursor-pointer select-none gap-2 text-muted-foreground"
               htmlFor="remember"
             >
               <div className="relative flex items-center">
                 <input
                   id="remember"
                   type="checkbox"
-                  className="size-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600 accent-emerald-600 cursor-pointer"
+                  className="size-4 rounded text-primary focus:ring-primary accent-primary cursor-pointer"
                   {...register('remember')}
                 />
               </div>
@@ -115,7 +113,7 @@ export function LoginForm() {
             </label>
             <Link
               href="/forgot-password"
-              className="font-medium text-emerald-600 hover:text-emerald-700"
+              className="font-medium text-primary hover:text-primary/90"
             >
               Forgot password?
             </Link>

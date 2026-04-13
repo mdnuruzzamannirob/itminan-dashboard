@@ -53,12 +53,12 @@ export function ResetPasswordForm() {
   })
 
   return (
-    <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
+    <Card className="w-full border">
       <CardHeader className="space-y-2">
-        <CardTitle className="text-3xl font-semibold text-slate-900">
+        <CardTitle className="text-3xl font-semibold ">
           Reset password
         </CardTitle>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Create a new password for your account.
         </p>
       </CardHeader>
@@ -67,7 +67,7 @@ export function ResetPasswordForm() {
           <div className="space-y-2">
             <Label htmlFor="password">New password</Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="password"
                 type="password"
@@ -85,7 +85,7 @@ export function ResetPasswordForm() {
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm new password</Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="confirmPassword"
                 type="password"

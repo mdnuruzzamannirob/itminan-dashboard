@@ -16,7 +16,7 @@ export function ErrorInfoMessage({ error, info }: ErrorInfoMessageProps) {
   }
 
   if (info) {
-    return <p className="text-xs text-slate-500">{info}</p>
+    return <p className="text-xs text-muted-foreground">{info}</p>
   }
 
   return null

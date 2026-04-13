@@ -18,7 +18,7 @@ export function VerifyEmailForm() {
   const email = searchParams.get('email') ?? ''
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [resendCooldown, setResendCooldown] = useState(0)
+  const [resendCoolDown, setResendCooldown] = useState(0)
   const [digits, setDigits] = useState<string[]>(
     Array.from({ length: OTP_LENGTH }, () => ''),
   )
@@ -41,14 +41,14 @@ export function VerifyEmailForm() {
 
   // Handle resend cooldown timer
   useEffect(() => {
-    if (resendCooldown <= 0) return
+    if (resendCoolDown <= 0) return
 
     const interval = setInterval(() => {
       setResendCooldown((prev) => prev - 1)
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [resendCooldown])
+  }, [resendCoolDown])
 
   const syncOtpValue = (nextDigits: string[]) => {
     setDigits(nextDigits)
@@ -122,16 +122,14 @@ export function VerifyEmailForm() {
   }
 
   return (
-    <Card className="w-full border-white/50 bg-white/80 backdrop-blur-sm">
+    <Card className="w-full border">
       <CardHeader className="space-y-2">
-        <CardTitle className="text-3xl font-semibold text-slate-900">
-          Verify OTP
-        </CardTitle>
-        <p className="text-sm text-slate-600">
+        <CardTitle className="text-3xl font-semibold ">Verify OTP</CardTitle>
+        <p className="text-sm text-muted-foreground">
           Enter the 6-digit code you received to continue password recovery.
         </p>
         {email ? (
-          <p className="text-xs text-slate-500">Code sent to {email}</p>
+          <p className="text-xs text-muted-foreground">Code sent to {email}</p>
         ) : null}
       </CardHeader>
       <CardContent>
@@ -154,7 +152,7 @@ export function VerifyEmailForm() {
                   event.preventDefault()
                   handlePaste(event.clipboardData.getData('text'))
                 }}
-                className="h-12 rounded-md border border-input bg-background text-center text-lg font-semibold text-slate-900 outline-none ring-offset-background transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="h-12 rounded-md border border-input bg-background text-center text-lg font-semibold  outline-none ring-offset-background transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               />
             ))}
           </div>
@@ -162,7 +160,7 @@ export function VerifyEmailForm() {
           {errors.otp ? (
             <ErrorInfoMessage error={errors.otp.message} />
           ) : (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted-foreground">
               Use exactly 6 digits. You can paste the whole code at once.
             </p>
           )}
@@ -175,18 +173,18 @@ export function VerifyEmailForm() {
             <Button
               type="button"
               variant="link"
-              className="px-0 text-emerald-600 disabled:text-slate-400 disabled:cursor-not-allowed"
+              className="px-0 text-primary disabled:text-muted-foreground disabled:cursor-not-allowed"
               onClick={handleResendOtp}
-              disabled={resendCooldown > 0}
+              disabled={resendCoolDown > 0}
             >
-              {resendCooldown > 0
-                ? `Resend in ${resendCooldown}s`
+              {resendCoolDown > 0
+                ? `Resend in ${resendCoolDown}s`
                 : 'Resend OTP'}
             </Button>
             <Button
               type="button"
               variant="link"
-              className="px-0 text-slate-600"
+              className="px-0 text-muted-foreground"
               onClick={() => router.back()}
             >
               Go back
