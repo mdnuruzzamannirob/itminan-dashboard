@@ -1,8 +1,8 @@
 'use client'
 
-import { StatCard } from '@/components/dashboard/stat-card'
+import { StatCard } from '@/components/dashboard/StatCard'
 import { ChartContainer } from '@/components/dashboard/chart-container'
-import { UserTable } from '@/components/dashboard/user-table'
+import { UserTable } from '@/components/dashboard/RecentUserTable'
 import { UsersRound, Activity, Clock3, Crown } from 'lucide-react'
 import { useState, useMemo } from 'react'
 
