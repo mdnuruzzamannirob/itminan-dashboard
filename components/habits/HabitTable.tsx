@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Delete, Edit } from 'lucide-react'
+import { Edit3, Trash2 } from 'lucide-react'
 
 export interface Habit {
   id: number
@@ -94,19 +94,19 @@ export function HabitTable({ habits, onEdit, onDelete }: HabitTableProps) {
                       variant="ghost"
                       size="icon"
                       onClick={() => onEdit?.(habit)}
-                      className="h-8 w-8 text-blue-600 hover:bg-blue-50"
+                      className="h-8 w-8 text-blue-600 hover:text-blue-600 hover:bg-blue-100"
                       title="Edit habit"
                     >
-                      <Edit className="size-4" />
+                      <Edit3 className="size-4" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => onDelete?.(habit)}
-                      className="h-8 w-8 text-red-600 hover:bg-red-50"
+                      className="h-8 w-8 text-red-600 hover:text-red-600 hover:bg-red-100"
                       title="Delete habit"
                     >
-                      <Delete className="size-4" />
+                      <Trash2 className="size-4" />
                     </Button>
                   </div>
                 </td>
